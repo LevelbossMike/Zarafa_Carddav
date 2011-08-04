@@ -475,7 +475,7 @@ class HTTP_WebDAV_Server_Zarafa extends HTTP_WebDAV_Server
 	 * @return	string	Encoded string.
 	 */
 	function toUTF8($str) {
-		return utf8_encode($str);
+		return $str;
 	}
 
 	/**
