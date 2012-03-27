@@ -475,7 +475,12 @@ class HTTP_WebDAV_Server_Zarafa extends HTTP_WebDAV_Server
 	 * @return	string	Encoded string.
 	 */
 	function toUTF8($str) {
-		return utf8_encode($str);
+		$encoding = mb_detect_encoding($str);
+		if ( 'UTF-8' == $encoding  ) {
+			return $str;
+		}
+		return mb_convert_encoding($str, $encoding, 'UTF-8');
+		#return utf8_encode($str);
 	}
 
 	/**
@@ -544,7 +549,7 @@ class HTTP_WebDAV_Server_Zarafa extends HTTP_WebDAV_Server
 				$message = mapi_msgstore_openentry($store, $contact[PR_ENTRYID]);
 				$props = mapi_getprops($message);
 				$name = $props[PR_DISPLAY_NAME];
-				$html_content .= "<a href=\"".sha1($name).$this->extension."\">".$name."</a><br/>\n";
+				$html_content .= "<a href=\"/carddav/".sha1($name).$this->extension."\">".$name."</a><br/>\n";
 			}
 			$html_content .= "</body></html>";
 
